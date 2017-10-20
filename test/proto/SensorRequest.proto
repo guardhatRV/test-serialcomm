@@ -1,0 +1,28 @@
+syntax = "proto2";
+
+package test;
+
+message SensorRequest {
+
+    enum RequestType {
+        GET_DATA = 1;
+        SET_DATA = 2;
+    }
+
+    required RequestType request  = 1 [default = GET_DATA];
+
+    enum SensorType {
+        UNKNOWN = 0;
+        O2 = 1;
+        CO = 2;
+        H2S = 3;
+        HCN = 4;
+        TEMPERATURE = 5;
+        HUMIDITY = 6;
+        AMBIENTLIGHT = 7;
+        PRESSURE = 8;
+        AMBIENTNOISE = 9;
+    }
+
+    required SensorType sensorType = 2 [default = UNKNOWN];
+}
