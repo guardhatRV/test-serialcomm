@@ -1,5 +1,7 @@
 package test;
 
+import test.SensorDataOuterClass.*;
+
 public class ReceiveMessageSM extends StateMachine {
 
     public enum SMStates {
@@ -188,12 +190,34 @@ public class ReceiveMessageSM extends StateMachine {
         }
 
         SensorDataOuterClass.SensorData sensorData =  SensorDataOuterClass.SensorData.parseFrom(tempArray);
+
+        /*
+        **** THIS CODE WAS FOR SINGLE VALUE RETRIEVAL.. REPEATED DEPRECATES THIS *****
         if(sensorData.hasSensors()) {
             SensorDataOuterClass.Sensor sensor = sensorData.getSensors();
             if (sensor.hasValue()) {
                 System.out.println("Sensor Type: " + sensor.getSensorType());
                 System.out.println(("Sensor Value: " + sensor.getValue()));
             }
+        }
+        */
+
+        for (Sensor sensors : sensorData.getSensorsList()) {
+            switch (sensors.getSensorType()) {
+                case TEMPERATURE:
+                    System.out.print("Temperature: ");
+                    break;
+                case HUMIDITY:
+                    System.out.print("Humidity: ");
+                    break;
+                case PRESSURE:
+                    System.out.print("Pressure: ");
+                    break;
+                default:
+                    System.out.print("Unsupported Type: ");
+                    break;
+            }
+            System.out.println(sensors.getValue());
         }
     }
 }

@@ -10,29 +10,18 @@ public class SendMessageSM extends StateMachine {
         super();
     }
 
-    public void ping() {
-        pFrame.setCommand(ProtocolFrame.PING);
-        pFrame.setOption(ProtocolFrame.ZERO);
-
-        pFrame.printFrameBinary();
-        //TBD
-    }
-
     public byte[] sendRequest() throws IOException {
         pFrame.setCommand(ProtocolFrame.PROTOBUF);
         pFrame.setOption(ProtocolFrame.ZERO);
 
         SensorRequestOuterClass.SensorRequest request = SensorRequestOuterClass.SensorRequest.newBuilder()
                 .setRequest(SensorRequest.RequestType.GET_DATA)
-                .setSensorType(SensorRequest.SensorType.O2)
+                .setSensorType(SensorRequest.SensorType.ALL)
                 .build();
 
         buildPayload(request.toByteArray());
 
         byte[] tempArray = pFrame.getByteArray();
-
-        // TEST
-        //pFrame.displayFrame(tempArray);
 
         return(tempArray);
     }
